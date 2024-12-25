@@ -40,12 +40,7 @@ defmodule CapQuiz do
  end
 
  def minscore() do
-  Enum.minshowdat
- end
-
- def startq() do
-
-
+#  Enum.minshowdat
  end
 
  def qme("x") do
@@ -53,22 +48,16 @@ defmodule CapQuiz do
  end
 
 
-
  def qme(inp) do
-    d = 
-   {co,codat} = Enum.min_by(d,fn {c,n} -> n["score"] end)
-
-   case Enum String.trim(IO.gets("capital of #{co}:")) do
-
-   case "x" ->
-    
-
-
-
-
-   with inp when inp != "x" <- String.trim(IO.gets("")) do
-     IO.puts(inp)
-   end
+#   {co,codat} = Enum.min_by(d,fn {c,n} -> n["score"] end)
+#
+#   case Enum String.trim(IO.gets("capital of #{co}:")) do
+#
+#   case "x" ->
+#    
+#   with inp when inp != "x" <- String.trim(IO.gets("")) do
+#     IO.puts(inp)
+#   end
 
  end
 
