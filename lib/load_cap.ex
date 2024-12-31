@@ -8,17 +8,17 @@ defmodule LoadCap do
 
    {:ok, dat} = "concap.csv" |> File.read()
    capdat = CapcsvParser.parse_string(dat) 
-#         |> Enum.take(5)
-         |> Enum.reduce(%{}, fn [co,ca,la,lo,cd,cont],acc -> Map.put(acc, co, %{"cap"=>ca,"lat"=>stof(la),"long"=>stof(lo),"code"=>cd,"cont"=>cont}) end)
+        |> Enum.take(5)
+        |> Enum.reduce(%{}, fn [co,ca,la,lo,cd,cont],acc -> Map.put(acc, co, %{"cap"=>ca,"lat"=>stof(la),"long"=>stof(lo),"code"=>cd,"cont"=>cont}) end)
 
    {:ok, capdat}
  end
 
 
 
- def createets() do
-  with :undefined <- :ets.whereis(:captable), do: :ets.new(:captable,[:set,:named_table,:protected])
-  with {:ok,capdat} <-loadcapcsv(), do: Enum.each(capdat, fn ea -> :ets.insert(:captable,ea) end)
+ def createets(tname) do
+  with :undefined <- :ets.whereis(tname), do: :ets.new(tname,[:set,:named_table,:protected])
+  with {:ok,capdat} <-loadcapcsv(), do: Enum.each(capdat, fn ea -> :ets.insert(tname,ea) end)
   
 
  end

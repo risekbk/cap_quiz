@@ -2,24 +2,28 @@ defmodule CapQuiz do
   @moduledoc """
   Documentation for `CapQuiz`.
   """
-
   use GenServer
-  NimbleCSV.define(CapcsvParser, separator: ",", escape: "\"")
 
   def start_link() do
     GenServer.start_link(__MODULE__,[],name: :mname)
   end
 
+  def getlst(:"$end_of_table",lst) do
+    lst
+  end
+
+  def getlst(nxt,lst) do
+    lst = [nxt | lst]
+    nxt = :ets.next(:mname,nxt)
+    getlst(nxt ,lst)
+  end
+
  def init(_state) do
-#    capdat = %{"USA": %{cap: "Washington"},"India": %{cap: "New Delhi"}}
-
-   {:ok, dat} = "concap.csv" |> File.read()
-   capdat = CapcsvParser.parse_string(dat) 
-#         |> Enum.take(5)
-         |> Enum.reduce(%{}, fn [co,ca,la,lo,cd,cont],acc -> Map.put(acc, co, %{"cap"=>ca,"lat"=>la,"long"=>lo,"code"=>cd,"cont"=>cont,"score" => 0}) end)
-#        |> Enum.reduce([], fn [co,ca,la,lo,cd,cont],acc -> [%{"country"=>co,"cap"=>ca,"lat"=>stof(la),"long"=>stof(lo),"code"=>cd,"cont"=>cont,"score" => 0} |acc] end)
-
-   {:ok, capdat}
+    LoadCap.createets(:mname)
+    fst = :ets.first(:mname)
+    lst = CapQuiz.getlst(fst,[fst])
+    state = Enum.reduce(lst,%{},fn i,acc -> Map.put(acc,i,%{rgt: 0,tq: 0}) end)
+    {:ok,state}
  end
 
  def handle_call(:show,_from,capdat) do
@@ -30,25 +34,49 @@ defmodule CapQuiz do
    GenServer.cast(:mname,{:incscore,co})
  end
 
+ def handle_cast({:incscore,co},capdat) do
+   {_curr,capdat} = Map.get_and_update(capdat,co,fn x ->{x,%{rgt: x[:rgt]+1,tq: x[:tq]+1}} end)
+   {:noreply,capdat}
+ end
+
  def showdat() do
    GenServer.call(:mname,:show) 
  end
 
- def handle_cast({:incscore,co},capdat) do
-  score = get_in(capdat,[co,"score"]) + 1
-  {:noreply,put_in(capdat,[co,"score"],score)}
- end
 
  def minscore() do
 #  Enum.minshowdat
  end
 
- def qme("x") do
+ def qme("x",_) do
    IO.puts(" Game ended by user")
  end
+ 
+ def qme(co,at) do
+   [{_c,%{"cap" => cap}}] = :ets.lookup(:mname,co)
+   IO.puts("Retrieved cap #{cap}")
+   case String.trim(IO.gets("Capital of #{co}:")) do
+   ^cap -> 
+      IO.puts("Entered cap #{cap}")
+      incscore(co) 
+    "x"-> 
+      IO.puts("Answer is #{cap}")
+    _ ->
+      IO.puts("Answer is #{cap} Enter x to exit")
+   end 
+ end
 
+ def qme() do
+  GenServer.call(:startquiz)
+ end
 
- def qme(inp) do
+ def handle_call(:startquiz,capdat) do
+  qme(Enum.at(capdat,0),0)
+ end
+
+ def qme_old(inp) do
+
+#  Enum.count(c)
 #   {co,codat} = Enum.min_by(d,fn {c,n} -> n["score"] end)
 #
 #   case Enum String.trim(IO.gets("capital of #{co}:")) do
