@@ -110,6 +110,10 @@ defmodule CapQuiz do
     {:ok, capdat}
   end
 
+  def handle_call(:startquiz, capdat) do
+    qme(Enum.at(capdat, 0), 0)
+  end
+
   def qme_old(inp) do
     #  Enum.count(c)
     #   {co,codat} = Enum.min_by(d,fn {c,n} -> n["score"] end)
