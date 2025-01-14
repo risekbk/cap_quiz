@@ -3,26 +3,15 @@ defmodule CapQuiz do
   Documentation for `CapQuiz`.
   """
   use GenServer
+  import LoadCap
 
   def start_link() do
-    GenServer.start_link(__MODULE__, [], name: :mname)
-  end
-
-  def getlst(:"$end_of_table", lst) do
-    lst
-  end
-
-  def getlst(nxt, lst) do
-    lst = [nxt | lst]
-    nxt = :ets.next(:mname, nxt)
-    getlst(nxt, lst)
+    GenServer.start_link(__MODULE__, [], name: :capquiz)
   end
 
   def init(_state) do
-    LoadCap.createets(:mname)
-    fst = :ets.first(:mname)
-    lst = CapQuiz.getlst(fst, [fst])
-    state = Enum.reduce(lst, %{}, fn i, acc -> Map.put(acc, i, %{rgt: 0, tq: 0}) end)
+    #    LoadCap.createets(:capquiz)
+    state = Enum.reduce(getlst(), %{}, fn i, acc -> Map.put(acc, i, %{rgt: 0, tq: 0}) end)
     {:ok, state}
   end
 
@@ -31,112 +20,90 @@ defmodule CapQuiz do
   end
 
   def incscore(co) do
-    GenServer.cast(:mname, {:incscore, co})
+    GenServer.cast(:capquiz, {:incscore, co})
   end
 
   def handle_cast({:incscore, co}, capdat) do
     {_curr, capdat} =
-      Map.get_and_update(capdat, co, fn x -> {x, %{rgt: x[:rgt] + 1, tq: x[:tq] + 1}} end)
+      case co do
+        {ct, true} ->
+          Map.get_and_update(capdat, ct, fn x -> {x, %{rgt: x[:rgt] + 1, tq: x[:tq] + 1}} end)
+
+        {ct, false} ->
+          Map.get_and_update(capdat, ct, fn x -> {x, %{rgt: x[:rgt], tq: x[:tq] + 1}} end)
+      end
 
     {:noreply, capdat}
   end
 
   def showdat() do
-    GenServer.call(:mname, :show)
+    GenServer.call(:capquiz, :show)
   end
 
-  def minscore() do
-    #  Enum.minshowdat
+  def qmin(n) do
+    ques = showdat()
+
+    ques
+    |> Map.keys()
+    |> Enum.sort_by(fn x -> ques[x][:rgt] end)
+    |> Enum.take(n)
   end
 
-  def qme("x", _) do
-    IO.puts(" Game ended by user")
+  def qupdate(c) do
+    ques = showdat()
+
+    nq =
+      ques
+      |> Map.keys()
+      |> Enum.sort_by(fn x -> ques[x][:rgt] end)
+      |> Enum.take(1)
+      |> hd()
+
+    IO.puts("got min")
+
+    a =
+      Map.take(ques, c)
+      |> Enum.map(fn
+        {co, %{rgt: n}} when n < 4 -> co
+        _ -> nq
+      end)
+
+    IO.inspect(a)
+    a
   end
 
-  def qme(co, at) do
-    [{_c, %{"cap" => cap}}] = :ets.lookup(:mname, co)
-    IO.puts("Retrieved cap #{cap}")
-
-    case String.trim(IO.gets("Capital of #{co}:")) do
-      ^cap ->
-        IO.puts("Entered cap #{cap}")
-        incscore(co)
-
-      "x" ->
-        IO.puts("Answer is #{cap}")
-
-      _ ->
-        IO.puts("Answer is #{cap} Enter x to exit")
-    end
+  def gi(inp) do
+    gi2 = &String.trim(IO.gets("Capital of #{&1}: "))
+    gi2.(inp)
   end
 
   def qme() do
-    GenServer.call(:startquiz)
+    qlist = qmin(5)
+    qloop("start", qlist, 0)
   end
 
-  # defmodule InfInput do
-  #  def gi(inp) do
-  #    gi2 = &String.trim(IO.gets("Capital of #{&1}: "))
-  #    gi2.(inp)
-  #  end
-  #
-  #  def iloop("x") do
-  #    IO.puts("Exiting")
-  #  end
-  #
-  #  def iloop(_inp) do
-  #    iloop(gi(2))
-  #  end
-  #
-  #  def iloop() do
-  #    iloop(gi(1))
-  #  end
-  # end
+  def qloop("x", _c, _n) do
+    IO.puts("Exiting thanks for playing")
+  end
 
-  def handle_call(:startquiz, capdat) do
-    case String.trim(IO.gets("Capital of #{co}:")) do
-      ^cap ->
-        IO.puts("Entered cap #{cap}")
-        incscore(co)
+  def qloop(_inp, c, n) do
+    ct = Enum.at(c, n)
+    ginp = gi(ct)
+    cap = gcap(ct)
 
-      "x" ->
-        IO.puts("Answer is #{cap}")
-
-      _ ->
-        IO.puts("Answer is #{cap} Enter x to exit")
+    if cap == ginp do
+      incscore({ct, true})
+    else
+      incscore({ct, false})
+      IO.puts("Answer is #{cap} Enter x to exit")
     end
 
-    qme(Enum.at(capdat, 0), 0)
-    {:ok, capdat}
-  end
+    case n do
+      4 ->
+        qloop(ginp, qupdate(c), 0)
 
-  def handle_call(:startquiz, capdat) do
-    qme(Enum.at(capdat, 0), 0)
-  end
-
-  def qme_old(inp) do
-    #  Enum.count(c)
-    #   {co,codat} = Enum.min_by(d,fn {c,n} -> n["score"] end)
-    #
-    #   case Enum String.trim(IO.gets("capital of #{co}:")) do
-    #
-    #   case "x" ->
-    #    
-    #   with inp when inp != "x" <- String.trim(IO.gets("")) do
-    #     IO.puts(inp)
-    #   end
-  end
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> CapQuiz.hello()
-      :world
-
-  """
-  def hello do
-    :world
+      _ ->
+        qloop(ginp, c, n + 1)
+    end
   end
 end

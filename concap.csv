@@ -1,4 +1,16 @@
 CountryName,CapitalName,CapitalLatitude,CapitalLongitude,CountryCode,ContinentName
+New Zealand,Wellington,-41.3,174.783333,NZ,Australia
+Qatar,Doha,25.283333333333335,51.533333,QA,Asia
+Norway,Oslo,59.916666666666664,10.75,NO,Europe
+Netherlands,Amsterdam,52.35,4.916667,NL,Europe
+Oman,Muscat,23.616666666666667,58.583333,OM,Asia
+Latvia,Riga,56.95,24.1,LV,Europe
+Cuba,Havana,23.116666666666667,-82.35,CU,North America
+Bhutan,Thimphu,27.466666666666665,89.633333,BT,Asia
+Australia,Canberra,-35.26666667,149.133333,AU,Australia
+Afghanistan,Kabul,34.516666666666666,69.183333,AF,Asia
+Bahamas,Nassau,25.083333333333332,-77.35,BS,North America
+Bangladesh,Dhaka,23.716666666666665,90.4,BD,Asia
 Tuvalu,Funafuti,-8.516666667,179.216667,TV,Australia
 Uganda,Kampala,0.31666666666666665,32.55,UG,Africa
 Ukraine,Kyiv,50.43333333333333,30.516667,UA,Europe
@@ -13,7 +25,6 @@ Aland Islands,Mariehamn,60.116667,19.9,AX,Europe
 Saint Martin,Marigot,18.0731,-63.0822,MF,North America
 Tokelau,Atafu,-9.166667,-171.833333,TK,Australia
 Western Sahara,El-Aaiún,27.153611,-13.203333,EH,Africa
-Afghanistan,Kabul,34.516666666666666,69.183333,AF,Asia
 Albania,Tirana,41.31666666666667,19.816667,AL,Europe
 Algeria,Algiers,36.75,3.05,DZ,Africa
 American Samoa,Pago Pago,-14.26666667,-170.7,AS,Australia
@@ -24,19 +35,15 @@ Antigua and Barbuda,Saint John's,17.116666666666667,-61.85,AG,North America
 Argentina,Buenos Aires,-34.58333333,-58.666667,AR,South America
 Armenia,Yerevan,40.166666666666664,44.5,AM,Europe
 Aruba,Oranjestad,12.516666666666667,-70.033333,AW,North America
-Australia,Canberra,-35.26666667,149.133333,AU,Australia
 Austria,Vienna,48.2,16.366667,AT,Europe
 Azerbaijan,Baku,40.38333333333333,49.866667,AZ,Europe
-Bahamas,Nassau,25.083333333333332,-77.35,BS,North America
 Bahrain,Manama,26.233333333333334,50.566667,BH,Asia
-Bangladesh,Dhaka,23.716666666666665,90.4,BD,Asia
 Barbados,Bridgetown,13.1,-59.616667,BB,North America
 Belarus,Minsk,53.9,27.566667,BY,Europe
 Belgium,Brussels,50.833333333333336,4.333333,BE,Europe
 Belize,Belmopan,17.25,-88.766667,BZ,Central America
 Benin,Porto-Novo,6.483333333333333,2.616667,BJ,Africa
 Bermuda,Hamilton,32.28333333333333,-64.783333,BM,North America
-Bhutan,Thimphu,27.466666666666665,89.633333,BT,Asia
 Bolivia,La Paz,-16.5,-68.15,BO,South America
 Bosnia and Herzegovina,Sarajevo,43.86666666666667,18.416667,BA,Europe
 Botswana,Gaborone,-24.63333333,25.9,BW,Africa
@@ -66,7 +73,6 @@ Cook Islands,Avarua,-21.2,-159.766667,CK,Australia
 Costa Rica,San Jose,9.933333333333334,-84.083333,CR,Central America
 Cote d'Ivoire,Yamoussoukro,6.816666666666666,-5.266667,CI,Africa
 Croatia,Zagreb,45.8,16,HR,Europe
-Cuba,Havana,23.116666666666667,-82.35,CU,North America
 Curaçao,Willemstad,12.1,-68.916667,CW,North America
 Cyprus,Nicosia,35.166666666666664,33.366667,CY,Europe
 Czech Republic,Prague,50.083333333333336,14.466667,CZ,Europe
@@ -128,7 +134,6 @@ Kosovo,Pristina,42.666666666666664,21.166667,KO,Europe
 Kuwait,Kuwait City,29.366666666666667,47.966667,KW,Asia
 Kyrgyzstan,Bishkek,42.86666666666667,74.6,KG,Asia
 Laos,Vientiane,17.966666666666665,102.6,LA,Asia
-Latvia,Riga,56.95,24.1,LV,Europe
 Lebanon,Beirut,33.86666666666667,35.5,LB,Asia
 Lesotho,Maseru,-29.31666667,27.483333,LS,Africa
 Liberia,Monrovia,6.3,-10.8,LR,Africa
@@ -157,17 +162,13 @@ Morocco,Rabat,34.016666666666666,-6.816667,MA,Africa
 Mozambique,Maputo,-25.95,32.583333,MZ,Africa
 Namibia,Windhoek,-22.56666667,17.083333,NA,Africa
 Nepal,Kathmandu,27.716666666666665,85.316667,NP,Asia
-Netherlands,Amsterdam,52.35,4.916667,NL,Europe
 New Caledonia,Noumea,-22.26666667,166.45,NC,Australia
-New Zealand,Wellington,-41.3,174.783333,NZ,Australia
 Nicaragua,Managua,12.133333333333333,-86.25,NI,Central America
 Niger,Niamey,13.516666666666667,2.116667,NE,Africa
 Nigeria,Abuja,9.083333333333334,7.533333,NG,Africa
 Niue,Alofi,-19.01666667,-169.916667,NU,Australia
 Norfolk Island,Kingston,-29.05,167.966667,NF,Australia
 Northern Mariana Islands,Saipan,15.2,145.75,MP,Australia
-Norway,Oslo,59.916666666666664,10.75,NO,Europe
-Oman,Muscat,23.616666666666667,58.583333,OM,Asia
 Pakistan,Islamabad,33.68333333333333,73.05,PK,Asia
 Palau,Melekeok,7.483333333333333,134.633333,PW,Australia
 Panama,Panama City,8.966666666666667,-79.533333,PA,Central America
@@ -179,7 +180,6 @@ Pitcairn Islands,Adamstown,-25.06666667,-130.083333,PN,Australia
 Poland,Warsaw,52.25,21,PL,Europe
 Portugal,Lisbon,38.71666666666667,-9.133333,PT,Europe
 Puerto Rico,San Juan,18.466666666666665,-66.116667,PR,North America
-Qatar,Doha,25.283333333333335,51.533333,QA,Asia
 Romania,Bucharest,44.43333333333333,26.1,RO,Europe
 Russia,Moscow,55.75,37.6,RU,Europe
 Rwanda,Kigali,-1.95,30.05,RW,Africa
